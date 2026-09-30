@@ -1,11 +1,14 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+
 import App from "./App";
 
-test("Application renders Home page", () => {
-  window.history.pushState({}, "", "/");
-
-  render(<App />);
+test("Home page is displayed", () => {
+  render(
+    <MemoryRouter initialEntries={["/"]}>
+      <App />
+    </MemoryRouter>
+  );
 
   expect(
     screen.getByRole("heading", {
@@ -14,8 +17,12 @@ test("Application renders Home page", () => {
   ).toBeInTheDocument();
 });
 
-test("Navigation links are present", () => {
-  render(<App />);
+test("navigation links are displayed", () => {
+  render(
+    <MemoryRouter initialEntries={["/"]}>
+      <App />
+    </MemoryRouter>
+  );
 
   expect(
     screen.getByRole("link", {
@@ -31,6 +38,34 @@ test("Navigation links are present", () => {
 
   expect(
     screen.getByRole("link", {
+      name: /contact us/i
+    })
+  ).toBeInTheDocument();
+});
+
+test("About Us page is displayed", () => {
+  render(
+    <MemoryRouter initialEntries={["/aboutus"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(
+    screen.getByRole("heading", {
+      name: /about us/i
+    })
+  ).toBeInTheDocument();
+});
+
+test("Contact Us page is displayed", () => {
+  render(
+    <MemoryRouter initialEntries={["/contactus"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(
+    screen.getByRole("heading", {
       name: /contact us/i
     })
   ).toBeInTheDocument();
